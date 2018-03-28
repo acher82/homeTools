@@ -2,7 +2,7 @@ import sys
 from os import listdir, rename
 from os.path import isfile, join
 
-if (len(sys.argv) == 1):
+if (len(sys.argv)==1):
     print("Provide a path")
     sys.exit(1)
 
