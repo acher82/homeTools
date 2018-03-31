@@ -5,6 +5,8 @@ import argparse
 import re
 from xlrd import open_workbook
 
+import de
+
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
@@ -22,6 +24,7 @@ args = parser.parse_args()
 print(args.filename)
 print(args.source)
 
+entities = []
 wb = open_workbook(args.filename)
 for sheet in wb.sheets():
     source = "none"
@@ -31,5 +34,6 @@ for sheet in wb.sheets():
             if (value.startswith('מסטרקארד'.decode('utf-8'))):
                 source = ''.join(c for c in value if c.isdigit())
             elif source and re.match(r"\d{2}\/\d{2}\/\d{4}", value):
-                print(value, sheet.cell(row,1).value, sheet.cell(row,4).value,source)
-   
+                entities.append(de.dataEntity(value, sheet.cell(row,1).value, sheet.cell(row,4).value, source))
+for de in entities:
+    print(de)
