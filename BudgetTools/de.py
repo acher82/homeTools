@@ -7,4 +7,4 @@ class dataEntity(object):
         self.summ = summ
         self.source = source
     def __str__(self):
-        return "{0},{1},'{2}',{3},{4}".format(self.date, self.month, self.place.encode('utf-8'), self.summ, self.source)
+        return "{0},{1},{2},{3},{4}".format(self.date, self.month, self.place.encode('utf-8'), self.summ, self.source)

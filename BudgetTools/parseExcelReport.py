@@ -27,7 +27,8 @@ parser.add_argument("-s", "--source", dest="source", required=True,
                     help="excel's file source (last 4 digits of credid card or bank account number)")
 args = parser.parse_args()
 
-parser_method = getattr(dataParser, "parse_%s" % args.source)
+parserName = args.source.split('_')[0]
+parser_method = getattr(dataParser, "parse_%s" % parserName)
 entities = parser_method(args)
 for de in entities:
     print(de)
