@@ -24,7 +24,7 @@ parser.add_argument("-p","--path", dest="filename", required=True,
 parser.add_argument("-m", "--month", dest="month", required=True,
                     help="report's month", type=is_valid_month)
 parser.add_argument("-s", "--source", dest="source", required=True,
-                    help="excel's file source (last 4 digits of credid card or bank account number)")
+                    help="excel's file source (source name_[last 4 digits of credid card or bank account number])")
 args = parser.parse_args()
 
 parserName = args.source.split('_')[0]
