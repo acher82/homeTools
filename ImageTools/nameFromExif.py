@@ -1,8 +1,9 @@
 import sys
-import exifread
 from datetime import datetime
 from os import listdir, rename
 from os.path import isfile, join
+
+import exifread
 
 if (len(sys.argv)==1):
     print("Provide a path")
@@ -25,6 +26,3 @@ for file in onlyfiles:
     sys.stdout.write("-->")
     sys.stdout.write(newName)
     print
-
-
-

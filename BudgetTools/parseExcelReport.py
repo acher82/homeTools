@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-import sys
-import os.path
 import argparse
+import os.path
+import sys
 
-import de
 import dataParser
+import de
+
 
 def is_valid_file(p):
     if not os.path.exists(p):
