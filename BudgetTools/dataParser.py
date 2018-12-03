@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+import csv
 import re
+
 from xlrd import open_workbook
 
 import de
+
 
 def parse_IsraNew(args):
     
@@ -40,5 +43,26 @@ def parse_Leumi(args):
                 value = sheet.cell(row,0).value
                 if re.match(r"\d{1,2}\/\d{1,2}\/\d{4}", value):
                     entities.append(de.dataEntity(value, args.month, sheet.cell(row,2).value, sheet.cell(row,6).value, source))
+
+    return entities
+
+def parse_Otzar(args):
+
+    entities = []
+
+    source = args.source.split('_')[1]
+
+    with open(args.filename,'rU') as tsv:
+        tsv.readline()
+        for line in csv.reader(tsv, dialect="excel-tab"):
+            if not line: continue
+            sum = None
+            if line[2].strip():
+                sum = float(line[2].replace(',','')) * -1
+            if line[3].strip():
+                sum = float(line[3].replace(',',''))
+            if sum:
+                entities.append(de.dataEntity(line[1], args.month, line[4].decode('cp1255'), sum, source))
+        tsv.close()
 
     return entities
