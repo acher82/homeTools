@@ -70,3 +70,32 @@ def parse_Otzar(args):
         tsv.close()
 
     return entities
+
+def parse_Hapoalim(args):
+
+    entities = []
+
+    account_number = None
+
+    wb = open_workbook(args.filename)
+    for sheet in wb.sheets():
+        for row in range(sheet.nrows):
+            if sheet.cell(row,0).value :
+                value = sheet.cell(row,0).value
+                if not account_number and 'מספר חשבון'.decode('utf-8') in value:
+                    account_number = re.search(r"\d{2}-\d{3}-\d{6}", value).group()
+                    print(account_number)
+                elif account_number and isinstance(value, float):
+                    sum = None
+                    if isinstance(sheet.cell(row,5).value, float):
+                        sum = sheet.cell(row,5).value
+                        source = ''
+                        target = account_number
+                    if isinstance(sheet.cell(row,4).value, float):
+                        sum = sheet.cell(row,4).value
+                        source = account_number
+                        target = ''
+                    if sum:
+                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,1).value, sum, source, target))
+                    
+    return entities
