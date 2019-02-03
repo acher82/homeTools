@@ -84,7 +84,6 @@ def parse_Hapoalim(args):
                 value = sheet.cell(row,0).value
                 if not account_number and 'מספר חשבון'.decode('utf-8') in value:
                     account_number = re.search(r"\d{2}-\d{3}-\d{6}", value).group()
-                    print(account_number)
                 elif account_number and isinstance(value, float):
                     sum = None
                     if isinstance(sheet.cell(row,5).value, float):
