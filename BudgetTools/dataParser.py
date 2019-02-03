@@ -30,6 +30,24 @@ def parse_IsraNew(args):
 
     return entities
 
+def parse_IsraOld(args):
+    
+    entities = []
+
+    source = args.source.split('_')[1]    
+
+    with open(args.filename,'rU') as tsv:
+        tsv.readline()
+        for line in csv.reader(tsv, dialect="excel-tab"):
+            if not line: continue
+            if re.match(r"\d{2}\/\d{2}\/\d{4}", line[0]):
+                sum = float(line[3].replace(',',''))
+                if sum > 0:
+                    entities.append(de.dataEntity(line[0], args.month, line[1].decode('cp1255'), sum, source, ''))
+        tsv.close()
+
+    return entities
+
 def parse_Leumi(args):
     
     entities = []
