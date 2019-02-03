@@ -22,9 +22,9 @@ def parse_IsraNew(args):
                     local = True
                 elif source and re.match(r"\d{2}\/\d{2}\/\d{4}", value):
                     if local:
-                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,1).value, sheet.cell(row,4).value, source))
+                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,1).value, sheet.cell(row,4).value, source, ''))
                     elif not sheet.cell(row,2).value.startswith('TOTAL FOR DATE'):
-                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,2).value, sheet.cell(row,5).value, source))
+                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,2).value, sheet.cell(row,5).value, source, ''))
                 elif source and 'עסקאות בחו˝ל'.decode('utf-8') in value:
                     local = False
 
@@ -42,7 +42,7 @@ def parse_Leumi(args):
             if sheet.cell(row,0).value :
                 value = sheet.cell(row,0).value
                 if re.match(r"\d{1,2}\/\d{1,2}\/\d{4}", value):
-                    entities.append(de.dataEntity(value, args.month, sheet.cell(row,2).value, sheet.cell(row,6).value, source))
+                    entities.append(de.dataEntity(value, args.month, sheet.cell(row,2).value, sheet.cell(row,6).value, source, ''))
 
     return entities
 
@@ -50,7 +50,7 @@ def parse_Otzar(args):
 
     entities = []
 
-    source = args.source.split('_')[1]
+    account_number = args.source.split('_')[1]    
 
     with open(args.filename,'rU') as tsv:
         tsv.readline()
@@ -58,11 +58,15 @@ def parse_Otzar(args):
             if not line: continue
             sum = None
             if line[2].strip():
-                sum = float(line[2].replace(',','')) * -1
+                sum = float(line[2].replace(',',''))
+                source = ''
+                target = account_number
             if line[3].strip():
                 sum = float(line[3].replace(',',''))
+                source = account_number
+                target = ''
             if sum:
-                entities.append(de.dataEntity(line[1], args.month, line[4].decode('cp1255'), sum, source))
+                entities.append(de.dataEntity(line[1], args.month, line[4].decode('cp1255'), sum, source, target))
         tsv.close()
 
     return entities
