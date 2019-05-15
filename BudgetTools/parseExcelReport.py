@@ -14,7 +14,7 @@ def is_valid_file(path):
         return path
 
 def is_valid_month(month):
-    if re.match(r"\d{2}/\d{4}", month):
+    if re.match(r"^(0?[1-9]|1[012])\/(19|20)\d{2}$", month):
         return month
     else:
         raise argparse.ArgumentTypeError("Invalid month format. MM/YYYY expected")
