@@ -24,12 +24,13 @@ parser.add_argument("-p","--path", dest="filename", required=True,
             help="path to excel file", metavar="FILE", type=is_valid_file)
 parser.add_argument("-m", "--month", dest="month", required=True,
             help="report's month in format MM/YYYY", type=is_valid_month)
-parser.add_argument("-s", "--source", dest="source", required=True,
-            help="excel's file source (source name_[credit card or bank account number])")
+parser.add_argument("-st", "--source-type", dest="source_type", required=True,
+            help="excel's file source type(source name_[credit card or bank account number])")
+parser.add_argument("-sn", "--source-name", dest="source_name", required=True,
+            help="excel's file source name (credit card or bank account number)")
 args = parser.parse_args()
 
-parserName = args.source.split('_')[0]
-parser_method = getattr(data_parser, "parse_%s" % parserName)
+parser_method = getattr(data_parser, "parse_%s" % args.source_type)
 entities = parser_method(args)
 for de in entities:
     print(de)
