@@ -3,7 +3,7 @@ import argparse
 import os.path
 import re
 
-import dataParser
+import data_parser
 import de
 
 
@@ -29,7 +29,7 @@ parser.add_argument("-s", "--source", dest="source", required=True,
 args = parser.parse_args()
 
 parserName = args.source.split('_')[0]
-parser_method = getattr(dataParser, "parse_%s" % parserName)
+parser_method = getattr(data_parser, "parse_%s" % parserName)
 entities = parser_method(args)
 for de in entities:
-    print de
+    print(de)

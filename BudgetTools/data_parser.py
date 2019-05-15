@@ -41,9 +41,9 @@ def parse_IsraOld(args):
         for line in csv.reader(tsv, dialect="excel-tab"):
             if not line: continue
             if re.match(r"\d{2}\/\d{2}\/\d{4}", line[0]):
-                sum = float(line[3].replace(',',''))
-                if sum > 0:
-                    entities.append(de.dataEntity(line[0], args.month, line[1].decode('cp1255'), sum, source, ''))
+                total = float(line[3].replace(',',''))
+                if total > 0:
+                    entities.append(de.dataEntity(line[0], args.month, line[1].decode('cp1255'), total, source, ''))
         tsv.close()
 
     return entities
@@ -74,17 +74,17 @@ def parse_Otzar(args):
         tsv.readline()
         for line in csv.reader(tsv, dialect="excel-tab"):
             if not line: continue
-            sum = None
+            total = None
             if line[2].strip():
-                sum = float(line[2].replace(',',''))
+                total = float(line[2].replace(',',''))
                 source = ''
                 target = account_number
             if line[3].strip():
-                sum = float(line[3].replace(',',''))
+                total = float(line[3].replace(',',''))
                 source = account_number
                 target = ''
-            if sum:
-                entities.append(de.dataEntity(line[1], args.month, line[4].decode('cp1255'), sum, source, target))
+            if total:
+                entities.append(de.dataEntity(line[1], args.month, line[4].decode('cp1255'), total, source, target))
         tsv.close()
 
     return entities
@@ -103,16 +103,16 @@ def parse_Hapoalim(args):
                 if not account_number and 'מספר חשבון'.decode('utf-8') in value:
                     account_number = re.search(r"\d{2}-\d{3}-\d{6}", value).group()
                 elif account_number and isinstance(value, float):
-                    sum = None
+                    total = None
                     if isinstance(sheet.cell(row,5).value, float):
-                        sum = sheet.cell(row,5).value
+                        total = sheet.cell(row,5).value
                         source = ''
                         target = account_number
                     if isinstance(sheet.cell(row,4).value, float):
-                        sum = sheet.cell(row,4).value
+                        total = sheet.cell(row,4).value
                         source = account_number
                         target = ''
-                    if sum:
-                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,1).value, sum, source, target))
+                    if total:
+                        entities.append(de.dataEntity(value, args.month, sheet.cell(row,1).value, total, source, target))
                     
     return entities
