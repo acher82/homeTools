@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import argparse
+import csv
+import importlib
 import os.path
 import re
-
-import data_parser
-import de
 
 
 def is_valid_file(path):
@@ -26,11 +25,20 @@ parser.add_argument("-m", "--month", dest="month", required=True,
             help="report's month in format MM/YYYY", type=is_valid_month)
 parser.add_argument("-st", "--source-type", dest="source_type", required=True,
             help="excel's file source type(source name_[credit card or bank account number])")
-parser.add_argument("-sn", "--source-name", dest="source_name", required=True,
+parser.add_argument("-sn", "--source-name", dest="source_name", required=False,
             help="excel's file source name (credit card or bank account number)")
+parser.add_argument("-o", "--output", dest="output", required=False,
+            help="output format [csv]")
 args = parser.parse_args()
 
-parser_method = getattr(data_parser, "parse_%s" % args.source_type)
-entities = parser_method(args)
-for de in entities:
-    print(de)
+parser = importlib.import_module("parsers.{}".format(args.source_type))
+entities = parser.parse(args.filename, args.month, args.source_name)
+
+if (args.output == "csv"):
+    file_name = "{}_{}.csv".format(args.source_type, args.month.replace("/", "_"))
+    with open(file_name, 'wt') as output_file:
+        file_writer = csv.writer(output_file)
+        file_writer.writerows(entities)
+else:
+    for de in entities:
+        print(de)
