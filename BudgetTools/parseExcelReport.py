@@ -7,10 +7,10 @@ import re
 
 
 def is_valid_file(path):
-    if not os.path.exists(path):
-        raise argparse.ArgumentTypeError("The file %s does not exist!" % path)
-    else:
+    if os.path.exists(path):
         return path
+    else:
+        raise argparse.ArgumentTypeError("The file {} does not exist!".format(path))
 
 def is_valid_month(month):
     if re.match(r"^(0?[1-9]|1[012])\/(19|20)\d{2}$", month):
