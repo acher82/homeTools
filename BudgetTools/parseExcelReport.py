@@ -24,11 +24,11 @@ parser.add_argument("-p","--path", dest="filename", required=True,
 parser.add_argument("-m", "--month", dest="month", required=True,
             help="report's month in format MM/YYYY", type=is_valid_month)
 parser.add_argument("-st", "--source-type", dest="source_type", required=True,
-            help="excel's file source type(source name_[credit card or bank account number])")
+            help="excel's file source type")
 parser.add_argument("-sn", "--source-name", dest="source_name", required=False,
             help="excel's file source name (credit card or bank account number)")
 parser.add_argument("-o", "--output", dest="output", required=False,
-            help="output format [csv]")
+            help="output format", choices=["csv"])
 args = parser.parse_args()
 
 parser = importlib.import_module("parsers.{}".format(args.source_type))
