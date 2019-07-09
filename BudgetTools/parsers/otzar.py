@@ -14,7 +14,7 @@ def parse(path, month, source):
     for sheet in wb.sheets():
         for row in range(sheet.nrows):
             value = sheet.cell(row,2).value
-            if re.match(r"\d{2}\/\d{2}\/\d{4}", value):
+            if type(value) is float and value > 0:
                 total = None
                 if isinstance(sheet.cell(row,3).value, float):
                     total = sheet.cell(row,3).value
