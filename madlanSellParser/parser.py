@@ -24,12 +24,12 @@ def current(jsonContent):
             flat["record"]["id"],
             flat["location"]["formattedAddress"],
             flat["record"]["features"]["rooms"],
-            flat["record"]["features"]["floor"],
+            flat["record"]["features"]["floor"] if "floor" in flat["record"]["features"] else "",
             flat["record"]["features"]["buildedArea"] if "buildedArea" in flat["record"]["features"] else "",
             flat["record"]["price"],
             flat["record"]["publishDate"],
             flat["record"]["updateDate"],
-            flat["record"]["features"]["floors"],
+            flat["record"]["features"]["floors"] if "floors" in flat["record"]["features"] else "",
             flat["record"]["sellerType"],
             flat["shareTexts"]["shareUrl"])
         entities.append(entity)
