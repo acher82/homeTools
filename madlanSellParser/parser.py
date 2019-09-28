@@ -22,7 +22,7 @@ def current(jsonContent):
     for flat in flatsList:
         entity=(
             flat["record"]["id"],
-            flat["location"]["formattedAddress"],
+            flat["location"]["formattedAddress"] if "formattedAddress" in flat["location"] else "",
             flat["record"]["features"]["rooms"],
             flat["record"]["features"]["floor"] if "floor" in flat["record"]["features"] else "",
             flat["record"]["features"]["buildedArea"] if "buildedArea" in flat["record"]["features"] else "",
