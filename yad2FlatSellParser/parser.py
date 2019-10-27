@@ -25,7 +25,7 @@ with open(args.filename, 'rb') as file:
     soup = BeautifulSoup(content, 'html.parser')
 
     for dev in soup.find_all("div", "feeditem table"):
-        item_id = dev.find("div", {"itemid" : True})["itemid"]
+        item_id = dev.find("div", {"item-id" : True})["item-id"]
         address = dev.find("span", {"class" : "title"}).contents[0].strip()
         values = dev.find_all("span", {"class" : "val"})
         rooms = values[0].contents[0].strip()
