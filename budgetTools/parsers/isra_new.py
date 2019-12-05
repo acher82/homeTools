@@ -20,7 +20,10 @@ def parse(path, month, source):
                     if local:
                         entities.append((value, month, sheet.cell(row,4).value, source, '', sheet.cell(row,1).value))
                     elif not sheet.cell(row,2).value.startswith('TOTAL FOR DATE'):
-                        entities.append((value, month, sheet.cell(row,5).value, source, '', sheet.cell(row,2).value))
+                        entities.append((
+                            value, month, sheet.cell(row,5).value, source, '',
+                            sheet.cell(row,2).value, '',
+                            str(sheet.cell(row,3).value) + " " + sheet.cell(row,4).value))
                 elif source and 'עסקאות בחו˝ל' in value:
                     local = False
 
