@@ -13,13 +13,15 @@ def parse(path, month, source):
         for row in range(sheet.nrows):
             if sheet.cell(row,0).value :
                 value = sheet.cell(row,0).value
-                if re.match(r"\d{1,2}-\d{1,2}-\d{4}", value):
+                if 'max executive' in value:
+                    source = ''.join(c for c in value if c.isdigit())
+                elif re.match(r"\d{1,2}-\d{1,2}-\d{4}", value):
                     if local:
                         entities.append((value.replace("-", "/"), month, sheet.cell(row,5).value, source, '', sheet.cell(row,1).value))
                     else:
                         entities.append((
                             value.replace("-", "/"), month, sheet.cell(row,5).value,
-                            source, '', sheet.cell(row,1).value,
+                            source, '', sheet.cell(row,1).value, '',
                             str(sheet.cell(row,7).value) + " " + sheet.cell(row,8).value))
 
     return entities

@@ -22,6 +22,8 @@ for file in only_files:
         f = open(os.path.join(args.path,file), 'rb')
         tags = exifread.process_file(f)
         f.close()
+        print(tags)
+        exit(1)
         
         dateStr = tags['EXIF DateTimeOriginal']
         dt = datetime.strptime(dateStr.__str__(), "%Y:%m:%d %H:%M:%S")
