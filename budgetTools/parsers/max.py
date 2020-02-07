@@ -17,11 +17,13 @@ def parse(path, month, source):
                     source = ''.join(c for c in value if c.isdigit())
                 elif re.match(r"\d{1,2}-\d{1,2}-\d{4}", value):
                     if local:
-                        entities.append((value.replace("-", "/"), month, sheet.cell(row,5).value, source, '', sheet.cell(row,1).value))
+                        entities.append((
+                            value.replace("-", "/"), month, sheet.cell(row,5).value,
+                            sheet.cell(row,3).value, '', sheet.cell(row,1).value))
                     else:
                         entities.append((
                             value.replace("-", "/"), month, sheet.cell(row,5).value,
-                            source, '', sheet.cell(row,1).value, '',
+                            sheet.cell(row,3).value, '', sheet.cell(row,1).value, '',
                             str(sheet.cell(row,7).value) + " " + sheet.cell(row,8).value))
 
     return entities
