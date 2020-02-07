@@ -32,7 +32,7 @@ parser.add_argument("-o", "--output", dest="output", required=False,
 args = parser.parse_args()
 
 parser = importlib.import_module("parsers.{}".format(args.source_type))
-entities = parser.parse(args.filename, args.month, args.source_name)
+entities = parser.parse(args.filename, "'{}".format(args.month), args.source_name)
 
 if (args.output == "csv"):
     file_name = "{}_{}.csv".format(args.source_type, args.month.replace("/", "_"))
