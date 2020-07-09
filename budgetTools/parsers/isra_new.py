@@ -13,7 +13,7 @@ def parse(path, month, source):
         for row in range(sheet.nrows):
             if sheet.cell(row,0).value :
                 value = sheet.cell(row,0).value
-                if 'דראקרטסמ' in value or 'מסטרקארד' in value:
+                if 'דראקרטסמ' in value or 'מסטרקארד' in value or 'טרכארשי' in value or 'ישראכרט' in value:
                     source = ''.join(c for c in value if c.isdigit())
                     local = True
                 elif source and re.match(r"\d{2}\/\d{2}\/\d{4}", value):
