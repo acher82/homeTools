@@ -14,7 +14,7 @@ def parse(path, month, source):
             if sheet.cell(row,0).value :
                 value = sheet.cell(row,0).value
                 if 'max executive' in value:
-                    source = ''.join(c for c in value if c.isdigit())
+                    source = "'{}".format(''.join(c for c in value if c.isdigit()))
                 elif re.match(r"\d{1,2}-\d{1,2}-\d{4}", value):
                     if local:
                         entities.append((
