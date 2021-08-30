@@ -60,7 +60,7 @@ parser.add_argument("-p","--path", required=True,
 parser.add_argument("-f", "--filter", required=True,
             help="files selector", default="*.html")
 parser.add_argument("-o", "--output", required=False,
-            help="output format", choices=["csv"])
+            help="csv out file name")
 args = parser.parse_args()
 
 entities = []
@@ -69,9 +69,8 @@ for file in glob.glob(f"{args.path}{args.filter}"):
 
 entities.sort(key=lambda x: x.id)
 
-if args.output == "csv":
-    out_file_name = "output.csv"
-    with open(out_file_name, 'wt') as output_file:
+if args.output:
+    with open(args.output, 'wt') as output_file:
         file_writer = csv.writer(output_file)
         file_writer.writerows(entities)
 else:
